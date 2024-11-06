@@ -7,5 +7,5 @@ The key function implementing the VS-Lite model is `RUN.R`. This script can be u
 ### Climatic data
 Monthly mean temperature and precipitation totals for each site and the period from January 1961 to December 2020. 
 
-### Climatic projections
+### Climate projections
 Decadal anomalies of mean monthly temperature and precipitation totals with respect to the normal period 1995-2014.
