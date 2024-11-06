@@ -9,3 +9,9 @@ Monthly mean temperature and precipitation totals for each site and the period f
 
 ### Climate projections
 Decadal anomalies of mean monthly temperature and precipitation totals with respect to the normal period 1995-2014.
+
+### NDVI
+Normalized Difference Vegetation Index for each site for 2000-2023 period.
+
+### Outputs
+A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. For each site and simulation, the .Rda file stores a list with following tables/arrays:
