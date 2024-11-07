@@ -2,7 +2,7 @@
 Data supporting the manuscript using the VS-Lite model to forecast intra-annual growth kinetics and phenology under climate change for temperate forests in Central Europe
 
 ### Rscripts 
-The key function implementing the VS-Lite model is `RUN.R`. This script can be used to load predefined functions from additional .R files, load the input data, calibrate the model and save the results for the baseline period. To run a model in a forecasting model, use `Forecast_modeling.R`. We acknowledge the scripts of the original VS-Lite model openly published by [Suzan Tolwinski-Ward](https://github.com/suztolwinskiward/VSLiteR) that we modified.
+The key function implementing the VS-Lite model is `RUN.R`. This script can be used to load predefined functions from additional .R files, load the input data, calibrate the model and save the results for the baseline period. To run a model in a forecasting model, use `Forecast_modeling.R`. We acknowledge [Suzan Tolwinski-Ward](https://github.com/suztolwinskiward/VSLiteR) who published original scripts of the VS-Lite model. We modified them according to recommendations of the recent studies including *Campelo et al. [2018]*(https://doi.org/10.1016/j.dendro.2018.03.001), *Seftigen et al. [2018]*(https://onlinelibrary.wiley.com/doi/10.1111/geb.12802), and *Tumajer et al. [2023]*(https://linkinghub.elsevier.com/retrieve/pii/S0048969723057807).
 
 ### Climatic data
 Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020. 
