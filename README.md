@@ -14,7 +14,7 @@ Decadal anomalies of mean monthly temperature and precipitation totals concernin
 Normalized Difference Vegetation Index for each site for the 2000-2023 period.
 
 ### Outputs
-A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. For each site and simulation, the `.Rda` file stores a list with the following tables/arrays:
+A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. For each site and simulation, the `.Rda` file stores a list with the following tables and variable:
 
 - **mod.trw** Modeled tree-ring width chronology
 - **gT** Matrix of simulate partial growth rates to temperature
@@ -25,4 +25,9 @@ A standard set of outputs of the VS-Lite model for a baseline calibration period
 - **Temp** Mean monthly air temperature [°C]
 - **syear** First year of simulations
 - **eyear** Last year of simulations
+- **par** Model parameters
+ - **T1, T2, T3, T4** Parameters defining the shape of the response function to temperature
+ - **M1, M2** Parameters defining the shape of the response function to temperature
+ - **M3, M4** Not-applied parameters defining a shape of the response function to temperature
+ - **Acor, I_0** Parameters of previous-year autocorrelation effects
 
