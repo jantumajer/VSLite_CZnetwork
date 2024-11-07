@@ -26,8 +26,8 @@ A standard set of outputs of the VS-Lite model for a baseline calibration period
 - **syear** First year of simulations
 - **eyear** Last year of simulations
 - **par** Model parameters
- - **T1, T2, T3, T4** Parameters defining the shape of the response function to temperature
- - **M1, M2** Parameters defining the shape of the response function to temperature
- - **M3, M4** Not-applied parameters defining a shape of the response function to temperature
- - **Acor, I_0** Parameters of previous-year autocorrelation effects
+  - **T1, T2, T3, T4** Parameters defining the shape of the response function to temperature
+  - **M1, M2** Parameters defining the shape of the response function to temperature
+  - **M3, M4** Not-applied parameters defining a shape of the response function to temperature
+  - **Acor, I_0** Parameters of previous-year autocorrelation effects
 
