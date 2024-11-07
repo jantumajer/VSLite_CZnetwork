@@ -16,7 +16,7 @@ Normalized Difference Vegetation Index for each site for the 2000-2023 period.
 ### Outputs
 A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. For each site and simulation, the `.Rda` file stores a list with the following tables/arrays:
 
-- **mod.trw** Modeled tree-ring width chronology
-- **gT** Matrix of simulate partial growth rates to temperature
-- **gM** Matrix of simulated partial growth rates to soil moisture
+- **mod.trw:** Modeled tree-ring width chronology
+- **gT:** Matrix of simulate partial growth rates to temperature
+- **gM:** Matrix of simulated partial growth rates to soil moisture
 
