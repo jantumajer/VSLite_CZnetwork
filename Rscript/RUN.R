@@ -11,23 +11,23 @@ setwd("E:/VSLite_R/R/")
 
 ## 0a] Model sub-algorithms ##
 # Calculation of partial growth rates to photoperiod
-source("compute.gE.R") # Source Suzan Tolwinski-Ward
-source("daylength.factor.from.lat.R") # Source Suzan Tolwinski-Ward
+source("compute.gE.R") # Author Suzan Tolwinski-Ward
+source("daylength.factor.from.lat.R") # Author Suzan Tolwinski-Ward
 
 # Soil moisture model
-source("leakybucket.monthly.R") # Source Suzan Tolwinski-Ward 
-source("leakybucket.submonthly.R") # Source Suzan Tolwinski-Ward
+source("leakybucket.monthly.R") # Author Suzan Tolwinski-Ward 
+source("leakybucket.submonthly.R") # Author Suzan Tolwinski-Ward
 
 # Ramp functions
-source("std.ramp.R") # Source Suzan Tolwinski-Ward - Original non-declining ramp functions
+source("std.ramp.R") # Author Suzan Tolwinski-Ward - Original non-declining ramp functions
 source("mod.ramp.R") # Modified increasing-stable-decreasing ramp functions
 
 # Integration functions
-source("integrate.orig.R") # Source Suzan Tolwinski-Ward - Integration based on MINIMUM of growth rates (following Liebig's law)
+source("integrate.orig.R") # Author Suzan Tolwinski-Ward - Integration based on MINIMUM of growth rates (following Liebig's law)
 source("integrate.multiplic.R") # Integration based on PRODUCT of growth rates (following initial TRACH model)
 
 # Model definitions
-source("VSLite.R") # Source Suzan Tolwinski-Ward
+source("VSLite.R") # Author Suzan Tolwinski-Ward (but modified for the implementation of new functions)
 
 ## 0b] Functions to calibrate the model against local site chronology ##
 source("randomization.R")
