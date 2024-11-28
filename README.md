@@ -8,7 +8,7 @@ We included an RWL file for one of our sites that can be used to test the basic 
 
 Be aware that the runtime of the `RUN.R` script is proportional to the number of iterations selected during the parameterization of the VS-Lite model. The reasonable number of iterations considering both potential variability of parameters and runtime is 2,500-10,000.
 
-Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1.
+Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1. No specific installation is needed, script `RUN.R` can be directly opened in R or RStudio.
 
 ### Instructions
 Instructions for using R-scripts are provided as annotations directly throughout the scripts. Similarly, scripts also automatically load all packages required for their functionality. 
