@@ -7,7 +7,7 @@ The key function implementing the VS-Lite model is `RUN.R`. This script can be u
 Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1.
 
 ### Instructions
-Instructions for using R-scripts are provided as annotations directly throughout the scripts. Similarly, scripts also automatically load all required packages for smooth functionality. 
+Instructions for using R-scripts are provided as annotations directly throughout the scripts. Similarly, scripts also automatically load all packages required for their functionality. 
 
 ### Climate
 Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020. 
