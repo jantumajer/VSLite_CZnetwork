@@ -6,7 +6,7 @@ The key function implementing the VS-Lite model is `RUN.R`. This script can be u
 
 We included an RWL file for one of our sites that can be used to test the basic functionality of the script together with climatic data relevant to the given site (P000015QURO). However, the script can be applied to any dendrochronological data stored in a standard RWL format.
 
-Be aware that the runtime of the script is proportional to the number of iterations selected during the parameterization of the VS-Lite model. The reasonable number of iterations considering both potential variability of parameters and runtime is 2,500-10,000.
+Be aware that the runtime of the `RUN.R` script is proportional to the number of iterations selected during the parameterization of the VS-Lite model. The reasonable number of iterations considering both potential variability of parameters and runtime is 2,500-10,000.
 
 Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1.
 
