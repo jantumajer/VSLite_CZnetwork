@@ -14,13 +14,13 @@ Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1. No 
 Instructions for using R-scripts are provided as annotations directly throughout the scripts. Similarly, scripts also automatically load all packages required for their functionality. 
 
 ### Climate
-Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020 (split into two files with suffix 1 or 2). Monthly climatic data from E-OBS for sites in the Czech Republic, used to test the sensitivity of our results to the choice of the climatic dataset, are included in the third file. 
+Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020. Monthly climatic data from E-OBS for sites in the Czech Republic, used to test the sensitivity of our results to the choice of the climatic dataset, are included in attached folder. 
 
 ### NDVI
 Normalized Difference Vegetation Index for each site for the 2000-2023 period.
 
 ### Outputs
-A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. For each site and simulation, the `.Rda` file stores a list with the following tables and variable:
+A standard set of outputs of the VS-Lite model for a baseline calibration period and four scenarios of future climate change. Forecasts based on mean and extreme climatologies (warm-dry, cool-wet) are in separate folders. For each site and simulation, the `.Rda` file stores a list with the following tables and variable:
 
 - **mod.trw** Modeled tree-ring width chronology
 - **gT** Matrix of simulate partial growth rates to temperature
