@@ -4,7 +4,7 @@ library(reshape2); library(ggplot2)
 ### Matrix of monthly integral growth rates with dominant climatic limiting factor ###
 ######################################################################################
 
-growth.matrix <- function(simul, tun){
+growth.matrix <- function(simul){
   
   ## 1] Extracting key variables from the simulation
   # Growth rates
@@ -17,7 +17,7 @@ growth.matrix <- function(simul, tun){
   temp <- simul$Temp
   
   # Model parameters
-  par <- tun$best
+  par <- simul$par
   
   ## 2] Reformating data into matrixes
   matrix <- matrix(0, ncol=ncol(Gr), nrow = 12)
@@ -28,42 +28,42 @@ growth.matrix <- function(simul, tun){
   # Different versions depending on shape of ramp function and integration equation
   
   # 3a] Original ramp function and original integration
-  if(tun$integration == "orig" & tun$ramp == "orig"){
-    matrix[((GrT > GrM) & GrM > 0)] <- "Drought" 
-    matrix[((GrT < GrM) & GrT > 0)] <- "Cold" 
+  if(par$integration == "orig" & par$ramp == "orig"){
+    matrix[((GrT > GrM))] <- "Drought" 
+    matrix[((GrT < GrM))] <- "Cold" 
     matrix[GrT == 1 & GrM == 1] <- "Optimal" 
-    matrix[Gr == 0] <- "Dormancy"
-    }
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
   
   # 3b] Modified ramp function and original integration
-  if(tun$integration == "orig" & tun$ramp == "modif"){
-    matrix[((GrT > GrM) & GrM > 0 & sm > par[1,"M3"])] <- "Moist" 
-    matrix[((GrT > GrM) & GrM > 0 & sm < par[1,"M2"])] <- "Drought" 
-    matrix[((GrT < GrM) & GrT > 0 & temp > par[1,"T3"])] <- "Warm" 
-    matrix[((GrT < GrM) & GrT > 0 & temp < par[1,"T2"])] <- "Cold" 
+  if(par$integration == "orig" & par$ramp == "modif"){
+    matrix[((GrT > GrM) & sm > par$M3)] <- "Moist" 
+    matrix[((GrT > GrM) & sm < par$M2)] <- "Drought" 
+    matrix[((GrT < GrM) & temp > par$T3)] <- "Warm" 
+    matrix[((GrT < GrM) & temp < par$T2)] <- "Cold" 
     matrix[GrT == 1 & GrM == 1] <- "Optimal" 
-    matrix[Gr == 0] <- "Dormancy"
-    }
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
   
   # 3c] Original ramp function and modified integration
-  if(tun$integration == "modif" & tun$ramp == "orig"){
+  if(par$integration == "modif" & par$ramp == "orig"){
     matrix[(GrM > 0 & GrT == 1)] <- "Drought" 
     matrix[(GrT > 0 & GrM == 1)] <- "Cold" 
     matrix[GrT == 1 & GrM == 1] <- "Optimal"
     matrix[Gr > 0 & GrT < 1 & GrM < 1] <- "Mixed" 
-    matrix[Gr == 0] <- "Dormancy"
-    }
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
   
   # 3d] Modified ramp function and modified integration
-  if(tun$integration == "modif" & tun$ramp == "modif"){
-    matrix[(GrT == 1 & GrM > 0 & sm > par[1,"M3"])] <- "Moist" 
-    matrix[(GrT == 1 & GrM > 0 & sm < par[1,"M2"])] <- "Drought" 
-    matrix[(GrM == 1 & GrT > 0 & temp > par[1,"T3"])] <- "Warm" 
-    matrix[(GrM == 1 & GrT > 0 & temp < par[1,"T2"])] <- "Cold" 
+  if(par$integration == "modif" & par$ramp == "modif"){
+    matrix[(GrT == 1 & GrM > 0 & sm > par$M3)] <- "Moist" 
+    matrix[(GrT == 1 & GrM > 0 & sm < par$M2)] <- "Drought" 
+    matrix[(GrM == 1 & GrT > 0 & temp > par$T3)] <- "Warm" 
+    matrix[(GrM == 1 & GrT > 0 & temp < par$T2)] <- "Cold" 
     matrix[GrT == 1 & GrM == 1] <- "Optimal" 
     matrix[Gr > 0 & GrT < 1 & GrM < 1] <- "Mixed" 
-    matrix[Gr == 0] <- "Dormancy"
-    }
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
   
   ## 4] Reformating (melting)
   matrix.Gr.melt <- melt(Gr)
@@ -111,8 +111,10 @@ return(matrix.plot)
 obsmod.chronologies <- function(simul, tun){
   
   # 1] Merging simulated and observed chronologies from their source tables
-  INPUT.TO.PLOT <- as.data.frame(cbind(c(simul$syear : simul$eyear),
-                                       t(simul$mod.trw),
+  nyears <- length(tun$obs.trw)
+  
+  INPUT.TO.PLOT <- as.data.frame(cbind(c(simul$syear : (simul$syear + nyears - 1)),
+                                       t(simul$mod.trw)[c(1:nyears)],
                                        (tun$obs.trw - mean(tun$obs.trw))/sd(tun$obs.trw)))
   colnames(INPUT.TO.PLOT) <- c("YEAR", "MODEL", "OBSERVED")
   
@@ -358,4 +360,115 @@ growth.rates.trends <- function(simul){
           plot.title = element_text(color = "black", hjust = 0.5, vjust = 0, face = "bold", size = 18))
   
   return(trends)
+}
+
+
+#######################
+### Growth deficits ###
+#######################
+
+growth.deficit <- function(simul){
+  
+  ## 1] Extracting key variables from the simulation
+  # Growth rates
+  Gr <- as.matrix(simul$gINT)
+  GrM <- simul$gM
+  GrT <- simul$gT
+  
+  # Climatic variables
+  sm <- simul$Moist
+  temp <- simul$Temp
+  
+  # Model parameters
+  par <- simul$par
+  
+  ## 2] Reformating data into matrixes
+  matrix <- matrix(0, ncol=ncol(Gr), nrow = 12)
+  colnames(matrix) <- c(simul$syear : simul$eyear)
+  rownames(matrix) <- c(1:12)
+  
+  ## 3] Conditions to identify a dominant limiting factor for each month
+  # Different versions depending on shape of ramp function and integration equation
+  
+  # 3a] Original ramp function and original integration
+  if(par$integration == "orig" & par$ramp == "orig"){
+    matrix[((GrT > GrM))] <- "Drought" 
+    matrix[((GrT < GrM))] <- "Cold" 
+    matrix[GrT == 1 & GrM == 1] <- "Optimal" 
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
+  
+  # 3b] Modified ramp function and original integration
+  if(par$integration == "orig" & par$ramp == "modif"){
+    matrix[((GrT > GrM) & sm > par$M3)] <- "Moist" 
+    matrix[((GrT > GrM) & sm < par$M2)] <- "Drought" 
+    matrix[((GrT < GrM) & temp > par$T3)] <- "Warm" 
+    matrix[((GrT < GrM) & temp < par$T2)] <- "Cold" 
+    matrix[GrT == 1 & GrM == 1] <- "Optimal" 
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
+  
+  # 3c] Original ramp function and modified integration
+  if(par$integration == "modif" & par$ramp == "orig"){
+    matrix[(GrM > 0 & GrT == 1)] <- "Drought" 
+    matrix[(GrT > 0 & GrM == 1)] <- "Cold" 
+    matrix[GrT == 1 & GrM == 1] <- "Optimal"
+    matrix[Gr > 0 & GrT < 1 & GrM < 1] <- "Mixed" 
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
+  
+  # 3d] Modified ramp function and modified integration
+  if(par$integration == "modif" & par$ramp == "modif"){
+    matrix[(GrT == 1 & GrM > 0 & sm > par$M3)] <- "Moist" 
+    matrix[(GrT == 1 & GrM > 0 & sm < par$M2)] <- "Drought" 
+    matrix[(GrM == 1 & GrT > 0 & temp > par$T3)] <- "Warm" 
+    matrix[(GrM == 1 & GrT > 0 & temp < par$T2)] <- "Cold" 
+    matrix[GrT == 1 & GrM == 1] <- "Optimal" 
+    matrix[Gr > 0 & GrT < 1 & GrM < 1] <- "Mixed" 
+    matrix[GrT == 0 & GrM == 0] <- "Double"
+  }
+  
+  ## 4] Reformating (melting)
+  matrix.Gr.melt <- melt(Gr)
+  matrix.limit.melt <- melt(matrix)
+  
+  INPUT.TO.PLOT <- cbind(matrix.limit.melt, matrix.Gr.melt$value); colnames(INPUT.TO.PLOT) <- c("MONTH", "YEAR", "Limit", "GrINT")
+  
+  ## Adding and aggregating growth deficits
+  INPUT.TO.PLOT <- cbind(INPUT.TO.PLOT, melt(simul$GD)$value); colnames(INPUT.TO.PLOT)[5] <- "GD"
+  INPUT.TO.PLOT.2 <- aggregate(INPUT.TO.PLOT$GD, by = list(YEAR = INPUT.TO.PLOT$YEAR, Limit = INPUT.TO.PLOT$Limit), FUN = sum)
+  
+  ## 5] Plotting
+  # Define colors for each climatic growth-limiting factors
+  colvec<- c("Drought" = "blue",
+             "Cold" = "red",
+             "Warm" = "purple",
+             "Moist" = "grey20",
+             "Optimal" = "green4",
+             "Mixed" = "orange2",
+             "Double" = "grey")
+  
+  bar.plot <- ggplot(data = INPUT.TO.PLOT.2) + 
+    geom_col(aes(fill = Limit, x = YEAR, y = x)) + 
+    scale_fill_manual(values = colvec)+
+    scale_x_continuous(name = "Year", limits = c(simul$syear-1, simul$eyear+1))+
+    ylim(0,1)+
+    ylab("Growth deficit [-]")+
+    theme_classic()+
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          panel.border = element_rect(fill = NA, colour = "grey20"),
+          axis.line = element_line(colour = "black"),
+          axis.text = element_text(size = 8, colour = "black"),
+          axis.title = element_text(size = 10, colour = "black"),
+          axis.ticks.length=unit(.1, "cm"),
+          strip.text = element_text(size = 10, colour = "black"),
+          # legend.position = "none",
+          # plot.title = element_text(color = "black", hjust = 0.5, vjust = 0, face = "bold", size = 18)
+    )
+  
+  return(list(plot = bar.plot,
+              input.to.plot = INPUT.TO.PLOT.2))
+  
 }
