@@ -14,10 +14,7 @@ Scripts were developed using R version 4.2.2. and RStudio version 2024.09.1. No 
 Instructions for using R-scripts are provided as annotations directly throughout the scripts. Similarly, scripts also automatically load all packages required for their functionality. 
 
 ### Climate
-Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020. 
-
-### Climate projections
-Decadal anomalies of mean monthly temperature and precipitation totals concerning the normal period 1995-2014.
+Monthly mean temperature and precipitation totals for each site from January 1961 to December 2020 (split into two files with suffix 1 or 2). Monthly climatic data from E-OBS for sites in the Czech Republic, used to test the sensitivity of our results to the choice of the climatic dataset, are included in the third file. 
 
 ### NDVI
 Normalized Difference Vegetation Index for each site for the 2000-2023 period.
