@@ -15,7 +15,7 @@ source("compute.gE.R") # Author Suzan Tolwinski-Ward
 source("daylength.factor.from.lat.R") # Author Suzan Tolwinski-Ward
 
 # Soil moisture model
-source("leakybucket.monthly.R") # Author Suzan Tolwinski-Ward 
+source("leakybucket.monthly_annualTm.R") # Author Suzan Tolwinski-Ward 
 source("leakybucket.submonthly.R") # Author Suzan Tolwinski-Ward
 
 # Ramp functions
